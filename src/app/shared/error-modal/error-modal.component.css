@@ -1,0 +1,12 @@
+.error-title {
+    font-weight: bold;
+    color: red
+}
+
+.error-content {
+    color: red
+}
+
+.modal {
+    opacity: 1
+}

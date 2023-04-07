@@ -1,0 +1,24 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{keyboard: false}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content text-center">
+            <div class="modal-header">
+                <h4 class="modal-title">Quản lý minh chứng</h4>
+                <button class="close" (click)="hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <my-image-upload #myFileUpload [isMine]="_isMine" (option)="_option" (idItem)="_idItem" (tableName)="_tableName" (onViewImage)="emmitViewImage($event)"
+                    (duocDanhGia)="_duocDanhGia" (onComplete)="upload($event)" (onDelete)="onDeleteEmit($event)" (onError)="onError($event)"></my-image-upload>
+                <div *ngIf="!_duocDanhGia" style="color: lawngreen;">
+                    đã hết hạn chỉnh sửa minh chứng!!!
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button class="btn btn-primary btn-success" (click)="save()" [hidden]="!_duocDanhGia"><i class="fa fa-floppy-o" aria-hidden="true"> Lưu</i></button>
+                <button class="btn btn-primary btn-info" (click)="hide()"><i class="fa fa-times " aria-hidden="true"> Thoát</i></button>
+            </div> -->
+        </div>
+    </div>
+</div>

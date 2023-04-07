@@ -1,0 +1,21 @@
+<div class="panel" style="position:  relative">
+    <input class="form-control searchinput" [(ngModel)]="valueInput" (keydown)="valueInputChange($event)" [placeholder]="_option.textPlaceholder"
+        type="search" (keydown.ArrowDown)="Down($event)" (keydown.ArrowUp)="Up($event)" (keydown.Enter)="Enter($event)">
+    <ul class="list-group" *ngIf="valueInput && !selected">
+        <li [class.selected]="j=== indexSelected" class="list-group-item" (click)="selectItem(j)" *ngFor="let item of data, let j=index">
+            <div class="row">
+                <div class="col-md-2" *ngIf="item[_option.nameValueImage]">
+                    <img class="img-custom" [src]="item[_option.nameValueImage]" onError="this.src='assets/images/noimage.jpg'">
+                </div>
+                <div class="col-md-10" style="text-align: left;margin: auto">
+                    <span *ngFor="let value of _option.arrayValueShow, let i=index">
+                        <span *ngIf="i>0"> - </span> {{ item[value] }}
+                    </span>
+                </div>
+            </div>
+        </li>
+        <!-- <li *ngIf="data.length == 0 && !selected" class="list-group-item">
+            <span>Không tìm thấy dữ liệu</span>
+        </li> -->
+    </ul>
+</div>

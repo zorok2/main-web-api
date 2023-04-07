@@ -1,0 +1,18 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title error-title">{{_title}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="section-block error-content">
+                    <p>{{_message}}</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary confirm-btn" (click)="_buttonBackOption.fn()">{{_buttonBackOption.text}}</button>
+            </div>
+        </div>
+    </div>
+</div>

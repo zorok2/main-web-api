@@ -1,0 +1,9 @@
+<div class="input-group">
+    <span class="input-group-addon" (click)="down()">
+        <i class="fa fa-minus"></i>
+    </span>
+    <input disabled (keyup)="change()" required type="number" [(ngModel)]="value" ng-required="required" class="form-control">
+    <span class="input-group-addon" (click)="up()">
+        <i class="fa fa-plus"></i>
+    </span>
+</div>

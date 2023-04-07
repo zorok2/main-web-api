@@ -1,0 +1,73 @@
+<div class="row mb-3">
+  <div class="col-md-6">
+    <ng-content></ng-content>
+  </div>
+  <div class="col-md-6">
+    <div class="pull-right">
+      <div class="btn-group dropdown">
+        <button addtoggleclass="true" class="dropdown-toggle size-custom" dropdowntoggle="" type="button"
+          aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">
+          Ẩn hiện cột
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right pl-2" dropdownmenu="" >
+          <li *ngFor='let col of allColumn' class="dropdown-item smart-form">
+            <ba-checkbox (click)='toggle($event,col)' [checked]='isChecked(col)' [label]="col.name"></ba-checkbox>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-datatable #table class="table-striped smart-form has-tickbox" [rows]="rows" [selected]="selected" [selectionType]="'checkbox'"
+  [columnMode]="'force'" [headerHeight]="40" [footerHeight]="40" [rowHeight]="'auto'" [externalPaging]="true" [count]="total"
+  [offset]="currentPage" [limit]="itemsPerPage" (page)='setPage($event)' (activate)="onActivate($event)" (select)='onSelect($event)'
+  (resize)='resize($event)' [cssClasses]="{
+      sortAscending: 'fa fa-caret-up',
+      sortDescending: 'fa fa-caret-down',
+      pagerLeftArrow: 'fa  fa-angle-left',
+      pagerRightArrow: 'fa fa-angle-right',
+      pagerPrevious: 'fa fa-angle-double-left',
+      pagerNext: 'fa fa-angle-double-right'
+    }">
+  <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn"
+      class="text-center">
+      <ba-checkbox [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"></ba-checkbox>
+    </ng-template>
+    <ng-template ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn"
+      class="text-center">
+      <ba-checkbox [checked]="isSelected" (change)="onCheckboxChangeFn($event)"></ba-checkbox>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="STT" [width]="50" [sortable]="false" [canAutoResize]="false" [resizeable]="false">
+    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+      {{rowIndex + this.calculateAlphaNumber() + 1}}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column [prop]="col.prop" [name]="col.name" [width]="col.width" [sortable]="false" *ngFor="let col of columns">
+    <ng-template let-row="row" ngx-datatable-cell-template>
+      <div [innerHTML]="row[col.prop]"></div>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Tác vụ" [width]="80" [sortable]="false" [sortable]="false" [canAutoResize]="false"
+    [resizeable]="false" *ngIf="hasDetail">
+    <ng-template let-row="row" ngx-datatable-cell-template class="text-center">
+      <a (click)="goToDetail(row)">
+        <i class="fa fa-eye display-6" aria-hidden="true"></i>
+      </a>
+    </ng-template>
+  </ngx-datatable-column>
+
+
+  <ngx-datatable-footer>
+    <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize" let-selectedCount="selectedCount"
+      let-curPage="curPage" let-offset="offset">
+      {{selectedCount}} dòng được chọn / Tổng {{rowCount}} dòng
+      <datatable-pager [pagerLeftArrowIcon]="'fa fa-angle-left'" [pagerRightArrowIcon]="'fa fa-angle-right'"
+        [pagerPreviousIcon]="'fa fa-angle-double-left'" [pagerNextIcon]="'fa fa-angle-double-right'" [page]="curPage"
+        [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)" (change)="table.onFooterPage($event)">
+      </datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>

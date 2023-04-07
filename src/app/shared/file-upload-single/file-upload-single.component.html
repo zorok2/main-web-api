@@ -1,0 +1,67 @@
+<!-- upload nhều file -->
+<loader [isRunning]="!loaded"></loader>
+<div *ngIf="loaded">
+    <!-- upload 2 chức năng trở lên-->
+    <div *ngIf="option.choices.length>1">
+        <label class="radio-inline custom-radio nowrap custom-control" *ngFor="let key of keysToggleBtn">
+            <input type="radio" name="category" (change)="ChangeStatusToggleBtn(key)" [checked]="_btn[key].checked" />
+            <span>{{_btn[key].header}}</span>
+        </label>
+    </div>
+
+    <!-- 
+            upload file từ máy tính
+    -->
+    <div *ngIf="_btn['1'] && _btn['1'].checked">
+        <input #uploadEl class="form-control form-file" type="file" name="files" ng2FileSelect [uploader]="_uploader" />
+        <div style="color:red;margin-top:5px;">
+            <div *ngIf="messageAllowType" class="mt-1">
+                <i>Cho phép upload các file định dạng: {{messageAllowType}}</i>
+            </div>
+
+            <div *ngIf="option.sizeCheck" class="mt-1">
+                <i>Kích thước tối đa: {{option.sizeCheck}} MB</i>
+            </div>
+        </div>
+        <img *ngIf="_option.thumb" class="rounded img-fluid mt-2 float-left" [src]="imgUploadLink" onError="this.src='assets/img/no-image.png'"
+        />
+
+        <div class="mt-2 float-left" *ngIf="!_option.thumb && _uploadedFile">
+            <strong>File đã upload:</strong>
+            <span *ngIf="!is_da_bi_xoa">
+                <i [class]="getCLassFileIcon(_uploadedFile?.file_type)"></i> {{_uploadedFile?.client_file_name}} - {{ _uploadedFile?.file_size/1024/1024 | number:'.2' }} MB
+            </span>
+            <span *ngIf="is_da_bi_xoa" class="fg-lightCrimson">
+                Tập tin này đã bị xoá ( Xóa tập tin để có thể upload thêm )
+            </span>
+            <span *ngIf="_btn['1'] && _btn['1'].checked && +params.file_system_guid">
+                <a (click)="deleteFile(_uploadedFile)">
+                    <i class="fa fa-times-circle fg-lightCrimson"></i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <!-- 
+        chép link ngoài
+    -->
+    <div *ngIf="_btn['2'] && _btn['2'].checked">
+        <input #datalFile type="text" class="form-control" [value]="params.linkFile" (keyup)="inputLinkFile(datalFile.value)" />
+        <img *ngIf="_option.thumb" class="rounded img-fluid mt-2 float-left" [src]="imgUploadLink" onError="this.src='assets/img/no-image.png'"
+        />
+        <div *ngIf="params.linkFile" class="float-left">
+            <div class="mt-2" *ngIf="!_option.thumb && params.linkFile.trim().length>0" style="word-break: break-word;">
+                <strong>Link:</strong>
+                <span>
+                    <i [class]="getCLassFileIcon('png')"></i> {{params.linkFile}}
+                </span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div class="float-left mt-2 ml-2 img-picture" *ngIf="_uploadedFile && option.allowDelete && _uploadedFile.map_path">
+        <button *ngIf="_btn['1'] && _btn['1'].checked && +params.file_system_guid>0" class="btn-delete" (click)="deleteFile(_uploadedFile)">
+            <i class="fa fa-times-circle icon-delete"></i>
+        </button>
+    </div> -->
+</div>

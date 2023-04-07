@@ -1,0 +1,41 @@
+<!-- NOTE phan upload -->
+
+<div *ngIf="_permission === PERMISSION.EDIT_ONLY">
+    
+    
+        <input #uploadEl *ngIf="option.multiple" class="form-control" type="file" name="files" ng2FileSelect [uploader]="_uploader"
+            multiple />
+    
+        <input #uploadEl *ngIf="!option.multiple" accept="image/*" class="form-control" type="file" name="files" ng2FileSelect [uploader]="_uploader"
+        />
+    
+        <!--<label>File sẽ upload</label>
+    <table>
+        <tbody>
+            <tr *ngFor="let item of _uploader.queue">
+                <td>{{item?.file?.name}}</td>
+                <td *ngIf="option.allowDelete">
+                    <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                                <span class="glyphicon glyphicon-trash"></span> Bỏ
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>-->
+    
+        <div style="margin-bottom: 40px; margin-top: 20px">
+            <img *ngFor='let item of uploadedImage' [src]="item">
+        </div>
+    </div>
+    
+    <!--<img src="http://localhost:3100/api/files/getFiles?idItem=234&tableName=noi_dung"  />-->
+    
+    <!--<div *ngIf="option.fileView === 'thumb'">
+        <div *ngFor="let item of __uploader.queue" class="picture-group">
+            <div class="picture-wrapper">
+                <img [src]="item?._thumbUrl" *ngIf="item?._thumbUrl">
+    
+            </div>
+            <i class="ion-ios-close-outline" (click)="item.remove();" *ngIf="option.allowDelete"></i>
+        </div>
+    </div>-->

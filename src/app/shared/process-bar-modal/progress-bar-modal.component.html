@@ -1,0 +1,25 @@
+<div class="modal fade" bsModal #modal="bs-modal" [config]="{backdrop: 'static', keyboard: false}" tabindex="-1" role="dialog"
+    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!--<div class="modal-header">
+                <h4 class="modal-title error-title">{{_title}}</h4>
+            </div>-->
+            <div class="modal-body">
+                <div class="section-block">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated progress-info" role="progressbar" attr.aria-valuenow="{{value}}"
+                            attr.aria-valuemin="0" attr.aria-valuemax="{{max}}" [ngStyle]="{width: percent + '%'}">{{_value}}/{{max}}</div>
+                    </div>
+                    <br/>
+                    <alert type="success" *ngIf="percent === 100">
+                        <strong>Hoàn thành.</strong>
+                    </alert>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="percent !== 100" class="btn btn-primary confirm-btn" (click)="hide()">Tắt</button>
+            </div>
+        </div>
+    </div>
+</div>

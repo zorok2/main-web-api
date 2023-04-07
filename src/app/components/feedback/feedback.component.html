@@ -1,0 +1,71 @@
+<div>
+  <a href="#" id="feedback_button" (click)="showModal()">
+  </a>
+
+  <div bsModal #formModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"
+    id="formModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="btn-group dropdown" dropdown>
+          <a class="btn btn-default">Tác vụ khác</a>
+
+          <a class="btn btn-primary dropdown-toggle" dropdownToggle>
+            <span class="caret"></span>
+          </a>
+          <ul *dropdownMenu class="dropdown-menu">
+            <li>
+              <a (click)="openAddMoreModal()">Thêm nhiều</a>
+            </li>
+            <li>
+              <a (click)="gotoQuanLyTuan()">Quản lý tuần</a>
+            </li>
+          </ul>
+        </div>
+
+
+
+        <form (ngSubmit)="submit(feedbackForm)" #feedbackForm="ngForm">
+          <div class="modal-header">
+            <button type="button" class="close" (click)="formModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Feedback</h4>
+          </div>
+          <div class="modal-body">
+
+            <alert #formErrorAlert [isOpen]="formErrorAlert.isOpen" type="danger" dismissible="true">
+              <i class="fa-fw fa fa-times"></i>
+              <strong>Error!</strong> {{formError}}
+            </alert>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <textarea ngModel name="feedbackMessage" data-required="Cần nhập feedback" data-message-required="Cần nhập feedback" class="form-control"
+                    placeholder="Content" rows="5" required></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div #imageScreenshot></div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" (click)="formModal.hide()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Send Feedback
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+</div>

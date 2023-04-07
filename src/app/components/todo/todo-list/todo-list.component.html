@@ -1,0 +1,64 @@
+<div class="content">
+    <div class="row">
+        <div class="col-md-12 ">
+
+            <div class="witget-body panel">
+                <loader [isRunning]="!_isLoaded"></loader>
+                <div class="smart-form mb-5" *ngIf="_isLoaded">
+                    <header>
+                        <i class="fa fa-bullhorn icon" aria-hidden="true"></i> TODO LIST
+                    </header>
+
+                    <fieldset class="mb-3">
+                        <div class="row">
+                            <section class="col col-md-4">
+                                <label class="input">
+                                    <input type="text" [(ngModel)]="content" class="form-control"
+                                        placeholder="Nội dung ..." (keyup.enter)="create()">
+                                </label>
+                            </section>
+                            <section class="col col-md-2">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="create()">
+                                    <i class="fa fa-plus"></i> Add new task
+                                </button>
+                            </section>
+                        </div>
+                    </fieldset>
+
+                    <div class="text-center">
+                        <div class="table-responsive">
+                            <table *ngIf="_isLoaded" class="table table-condensed table-hover smart-form has-tickbox"
+                                cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr *ngFor="let value of list;trackBy:identify;let i=index">
+                                        <td class="text-center" width="5%">
+                                            <ba-checkbox [checked]="value.checked" (change)="check(value.id)">
+                                            </ba-checkbox>
+                                        </td>
+                                        <td class="text-left" width="50%">
+                                            <span [class]="value.checked ? 'text-strike': ''"
+                                                *ngIf="!value.edit">{{value.content}}
+                                            </span>
+                                            <label class="input" *ngIf="value.edit">
+                                                <input type="text" [(ngModel)]="value.content"
+                                                    (keyup.enter)="update(value)" />
+                                            </label>
+                                        </td>
+                                        <td class=" text-right" width="30%">
+                                            {{value.time_create}}
+                                        </td>
+                                        <td class="text-right" width="15%">
+                                            <i class="fa fa-2x fa-pencil cursor" (click)="edit(value.id)"></i>
+                                            <i class="fa fa-2x fa-times fg-crimson cursor"
+                                                (click)="delete(value.id)"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

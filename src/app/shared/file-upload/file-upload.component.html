@@ -1,0 +1,119 @@
+<input #uploadEl *ngIf="option.multiple" class="form-control" type="file" name="files" ng2FileSelect [uploader]="_uploader"
+    multiple />
+
+<input #uploadEl *ngIf="!option.multiple" [disabled]="_uploader.queue.length >= 1" class="form-control" type="file" name="files"
+    ng2FileSelect [uploader]="_uploader" />
+
+<!--<label>File sẽ upload</label>
+<table>
+    <tbody>
+        <tr *ngFor="let item of _uploader.queue">
+            <td>{{item?.file?.name}}</td>
+            <td *ngIf="option.allowDelete">
+                <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> Bỏ
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>-->
+
+<div style="margin-bottom: 40px; margin-top: 20px">
+
+    <h3>Danh sách upload</h3>
+    <p>Số file trong danh sách: {{ _uploader?.queue?.length }}</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th width="50%">Tên file</th>
+                <th>Kích thước</th>
+                <th *ngIf="_option.auto">Quá trình</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of _uploader.queue">
+                <td><i class="{{item.cssClassFileIcon}}" style="margin-right: 10px"></i></td>
+                <td><strong>{{ item?.file?.name }}</strong></td>
+                <td nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                <td *ngIf="_option.auto">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap>
+                    <button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()" [disabled]="!item.isUploading">
+                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">
+                            <span class="glyphicon glyphicon-trash"></span> Remove
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <br/>
+        <button type="button" class="btn btn-warning btn-s" (click)="_uploader.cancelAll()" [disabled]="!_uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+        </button>
+        <button type="button" class="btn btn-danger btn-s" (click)="_uploader.clearQueue()" [disabled]="!_uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+        </button>
+    </div>
+</div>
+
+<div style="margin-bottom: 40px; margin-top: 20px">
+
+    <h3>Danh sách file đã upload</h3>
+    <p>Số file trong danh sách: {{ _uploader?.queue?.length }}</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th width="50%">Tên file</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let file of _uploadedFiles">
+                <td><i class="{{file.cssClassFileIcon}}" style="margin-right: 10px"></i></td>
+                <td><strong><a target="_blank" href="{{file?.linkFile}}">{{ file?.client_file_name }}</a></strong></td>
+                <td nowrap>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="deleteFile(file)">
+                            <span class="glyphicon glyphicon-trash"></span> Xóa file
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <br/>
+        <button type="button" class="btn btn-danger btn-s" (click)="deleteAllFile()" [disabled]="!_uploadedFiles.length">
+                    <span class="glyphicon glyphicon-trash"></span> Xóa hết
+        </button>
+    </div>
+</div>
+
+<!--<img src="http://localhost:3100/api/files/getFiles?idItem=234&tableName=noi_dung"  />-->
+
+<!--<div *ngIf="option.fileView === 'thumb'">
+    <div *ngFor="let item of __uploader.queue" class="picture-group">
+        <div class="picture-wrapper">
+            <img [src]="item?._thumbUrl" *ngIf="item?._thumbUrl">
+
+        </div>
+        <i class="ion-ios-close-outline" (click)="item.remove();" *ngIf="option.allowDelete"></i>
+    </div>
+</div>-->

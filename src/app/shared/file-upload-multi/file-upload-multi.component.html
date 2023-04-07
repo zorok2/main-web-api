@@ -1,0 +1,97 @@
+<input #uploadEl class="form-control" type="file" name="files" ng2FileSelect [uploader]="_uploader" multiple *ngIf="!option.lockUpload"
+/>
+<div style="color:red;margin-top:5px;">
+  <div *ngIf="messageAllowType" class="mt-1">
+    <i>Cho phép upload các file định dạng: {{messageAllowType}}</i>
+  </div>
+
+  <div *ngIf="option.sizeCheck" class="mt-1">
+    <i>Kích thước tối đa: {{option.sizeCheck}} MB</i>
+  </div>
+</div>
+
+<div style="margin-bottom: 20px; margin-top: 10px" *ngIf="_uploader && _uploader.queue.length>0">
+
+  <p>File upload: {{ _uploader?.queue?.length }}</p>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="text-center" width="1">STT</th>
+        <th class="text-left">Tên file</th>
+        <th class="text-right" width="1">Kích thước</th>
+        <th class="text-center" width="1">Loại</th>
+        <th *ngIf="_option.auto" class="text-left">Quá trình</th>
+        <th class="text-center" width="1" *ngIf="!option.lockUpload">
+          <a (click)="_uploader.clearQueue()" style="text-decoration: underline !important;">Xóa hết</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="_uploader && _uploader.queue.length==0">
+        <td colspan="5" class="text-center">Không có file nào</td>
+      </tr>
+      <tr *ngFor="let item of _uploader.queue;let i=index">
+        <td class="text-center">{{i+1}}</td>
+        <td class="text-left">
+          <strong>{{ item?.file?.name }}</strong>
+        </td>
+        <td nowrap class="text-right">{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+        <td class="text-right">
+          <i class="{{item.cssClassFileIcon}}" style="margin-right: 10px"></i>
+        </td>
+        <td *ngIf="_option.auto" class="text-left">
+          <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+          </div>
+        </td>
+        <td nowrap class="text-center" *ngIf="!option.lockUpload">
+          <div class="display-block px-3">
+            <a (click)="item.remove()" title="Xóa">
+              <i class="fa fa-trash trash fg-darkRed" aria-hidden="true"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="margin-top: 20px" *ngIf="_uploadedFiles && _uploadedFiles.length>0">
+
+  <p>File đã upload: {{ _uploadedFiles?_uploadedFiles.length:0 }}</p>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="text-center" width="20px">STT</th>
+        <th class="text-left">Tên file</th>
+        <th class="text-center" width="50px">Loại</th>
+        <th class="text-center" width="50px" *ngIf="!option.lockUpload && option.allowDelete">
+          <a (click)="deleteAllFile()" style="text-decoration: underline !important;">Xóa hết</a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="_uploadedFiles && _uploadedFiles.length==0">
+        <td colspan="4" class="text-center">Không có file nào</td>
+      </tr>
+      <tr *ngFor="let file of _uploadedFiles;let i=index">
+        <td class="text-center">{{i+1}}</td>
+        <td class="text-left">
+          <strong>
+            <a target="_blank" (click)="downloadFile(file?.linkFile)">{{ file?.client_file_name }}</a>
+          </strong>
+        </td>
+        <td class="text-center">
+          <i class="{{file.cssClassFileIcon}}" style="margin-right: 10px"></i>
+        </td>
+        <td nowrap class="text-center" *ngIf="!option.lockUpload && option.allowDelete">
+          <a (click)="deleteFile(file)">
+            <i class="fa fa-trash trash fg-darkRed" aria-hidden="true"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

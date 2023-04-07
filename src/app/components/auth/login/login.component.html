@@ -1,0 +1,113 @@
+<header id="header" class="animated fadeInDown">
+
+    <span id="extr-page-header-space">
+    </span>
+
+</header>
+<div id="main" role="main" class="animated fadeInDown">
+
+    <div id="content" class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
+                <h1 class="txt-color-red login-header-big">QUẢN LÝ PHÂN QUYỀN</h1>
+
+                <div class="hero">
+                    <div class="pull-left login-desc-box-l">
+                        <h4 class="paragraph-header">Kênh thông tin dùng để quản lý mọi thông tin phân quyền
+                        </h4>
+
+                        <!-- <div class="login-app-icons">
+              <a target="_blank" href="http://groupzaa.com/" class="btn btn-info btn-sm">Website GROUPZAA</a>
+              <a target="_blank" href="https://www.facebook.com/Moneyzaa-183253562324656/" class="btn btn-info btn-sm">Facebook</a>
+            </div> -->
+                    </div>
+                    <img src="assets/img/demo/demo-image.jpg" class="pull-right display-image" alt=""
+                        style="width:210px">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                <div class="well no-padding">
+                    <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" class="smart-form client-form">
+                        <header>
+                            ĐĂNG NHẬP
+                        </header>
+
+                        <fieldset>
+                            <section>
+                                <div class="alert alert-danger fade in" *ngIf="error">
+                                    <span [innerHTML]="error?.html"></span>
+                                    <!-- <a href="http://qlcntt.hutech.edu.vn/forgot-password" *ngIf="error?.code == 405">
+                                    <strong *ngIf="error?.code == 405">Quên mật khẩu?</strong>
+                                  </a>
+                                  <a href="http://qlcntt.hutech.edu.vn/chi-tiet-ho-tro/huong-dan-yeu-cau-cap-tai-khoan-noi-bo-1007027"
+                                    *ngIf="error?.code == 400">
+                                    <strong *ngIf="error?.code == 400">Yêu cầu tài khoản?</strong>
+                                  </a> -->
+                                </div>
+                            </section>
+                            <section>
+                                <label class="label">Tài khoản</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input ngModel name="username" class="form-control login-form" type="text" required>
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-user txt-color-teal"></i>
+                                        Vui lòng điền tài khoản đăng nhập</b>
+                                </label>
+                            </section>
+                            <section>
+                                <label class="label">Mật mã</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input ngModel name="password" class="form-control login-form" type="password"
+                                        required>
+                                    <b class="tooltip tooltip-top-right">
+                                        <i class="fa fa-lock txt-color-teal"></i> Nhập mật mã của bạn</b>
+                                </label>
+
+                                <!--<div class="note">
+                  Đăng nhập không được? <a routerLink="/auth/forgot-password">Xem hướng dẫn tại đây</a>
+                </div>-->
+                            </section>
+                            <!-- 
+                end form nhập
+               -->
+
+                            <!-- 
+                nếu số lần đăng nhập sai là quá 5 lần thì hiện recapcha
+               -->
+                            <section>
+                                <re-captcha #recaptcha *ngIf="SoLanDangNhapSai >= 5" type='image'
+                                    (resolved)="resolved($event)"></re-captcha>
+                            </section>
+
+                        </fieldset>
+
+                        <!-- 
+              đang nhập capcha hay đang chạy quy trình đăng nhập thì disable và ko cho thao tác
+             -->
+                        <footer>
+                            <button [disabled]="SoLanDangNhapSai >= 5 && _Captcha || _isRunning" type="submit"
+                                class="btn btn-primary">
+                                Đăng nhập <i *ngIf="_isRunning" class="fa fa-gear fa-spin"></i>
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+                <h5 class="text-center">Version {{version}}</h5>
+                <ul class="list-inline text-center">
+                    <li>
+                        <!-- <a href="https://www.facebook.com/Moneyzaa-183253562324656/" class="btn btn-primary btn-circle" target="_blank">
+              <i class="fa fa-facebook"></i>
+            </a> -->
+                        <!-- </li>
+          <li>
+            <a href="https://www.youtube.com/channel/UCdFWBUbGqfrLdfL9rxJhNgA" class="btn btn-danger btn-circle" target="_blank">
+              <i class=" fa fa-youtube "></i>
+            </a>
+          </li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
